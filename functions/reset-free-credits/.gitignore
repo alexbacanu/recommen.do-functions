@@ -147,6 +147,3 @@ dist
 # OS
 ## Mac
 .DS_Store
-
-# has env variabls
-appwrite.json

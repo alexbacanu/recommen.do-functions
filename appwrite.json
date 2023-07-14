@@ -1,0 +1,30 @@
+{
+  "projectId": "6491ab878b30a8638965",
+  "projectName": "recommen.do.dev",
+  "functions": [
+    {
+      "$id": "6491d10665736f674d3f",
+      "name": "create-profile",
+      "runtime": "node-16.0",
+      "path": "functions/create-profile",
+      "entrypoint": "src/index.js",
+      "ignore": ["node_modules", ".npm"],
+      "execute": [],
+      "events": ["users.*.sessions.*.create", "users.*.verification.*.create"],
+      "schedule": "",
+      "timeout": 15
+    },
+    {
+      "$id": "6494a461af3c30bb8a47",
+      "name": "reset-free-credits",
+      "runtime": "node-16.0",
+      "path": "functions/reset-free-credits",
+      "entrypoint": "src/index.js",
+      "ignore": ["node_modules", ".npm"],
+      "execute": [],
+      "events": [],
+      "schedule": "0 0 * * *",
+      "timeout": 15
+    }
+  ]
+}
