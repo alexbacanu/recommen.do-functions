@@ -1,14 +1,13 @@
 # create-profile
 
-An appwrite function that syncs the userId between Appwrite Auth, Appwrite Database and Stripe.
+An appwrite function that resets the credits after 30 days since account creation.
 
 ## 🤖 Documentation
 
 Simple function that does the following:
 
-- Creates a document in the `main` database and `profile` collection
-- If user exists -> makes sure the email is synced between auth, database and stripe
-- If an unique identifier exists -> that means the email has already created a profile, deleted the account, then gets 0 recommendations.
+- Finds all documents in the `main` database and `profile` collection based on $createdAt < 30 days, credits = 10, stripeSubscriptionId = none
+- Sets the credits to 0
 
 _Example input:_
 
@@ -19,17 +18,15 @@ _Example output:_
 ```json
 {
   message: "Response message",
-  userId?: "UserID",
   error?: "Error message"
 }
 ```
 
 ## 📝 Trigger
 
-Function gets triggered by these events:
+Function gets triggered every day at midnight:
 
-- **users.\*.sessions.\*.create**
-- **users.\*.verification.\*.create**
+- **schedule** - "0 0 \* \* \*"
 
 ## 📝 Environment Variables
 
@@ -38,7 +35,6 @@ List of environment variables used by this cloud function:
 - **APPWRITE_FUNCTION_ENDPOINT** - Endpoint of Appwrite project
 - **APPWRITE_FUNCTION_PROJECT_ID** - Appwrite Project ID Key
 - **APPWRITE_FUNCTION_API_KEY** - Appwrite API Key
-- **STRIPE_SECRET_KEY** - Stripe API Key
 
 ## 📝 Database requirements
 
@@ -47,25 +43,13 @@ List of database requrements by this cloud function:
 _Attributes:_
 Database `main` collection `profile`:
 
-- userId: string(128)
 - credits: number(9999)
-- email: email
-- name: string(256)
 - stripeSubscriptionId: string(128)
-- termsAgreed: date
-
-Database `main` collection `identifier`:
-
-- identifier: string(64)
 
 _Indexes:_
 Database `main` collection `profile`:
 
-- userId: ASC
-
-Database `main` collection `identifier`:
-
-- identifier: ASC
+- Compound: $createdAt, credits, stripeSubscriptionId : ASC, ASC, ASC
 
 _Settings:_
 
