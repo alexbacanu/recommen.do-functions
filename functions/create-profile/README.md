@@ -18,9 +18,9 @@ _Example output:_
 
 ```json
 {
-  message: "Response message",
-  userId?: "UserID",
-  error?: "Error message"
+  "message": "Response message",
+  "userId?": "UserID",
+  "error?": "Error message"
 }
 ```
 
