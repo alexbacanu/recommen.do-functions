@@ -17,8 +17,8 @@ _Example output:_
 
 ```json
 {
-  message: "Response message",
-  error?: "Error message"
+  "message": "Response message",
+  "error?": "Error message"
 }
 ```
 
